@@ -39,14 +39,9 @@ export interface ResumeProfileData {
   education: Education;
   projects: Project[];
 }
-...
-  selectedSkillLabel: string;
-  clearFilter: string;
-  skillAnalyticsTitle: string;
-  qrCodeShareTitle: string;
-  timelineViewTitle: string;
-}
 
+export interface StudyResource {
+  title: string;
   category: string;
   description: string;
   link: string;
@@ -105,4 +100,8 @@ export interface AppCopy {
   filterSince2020: string;
   selectedSkillLabel: string;
   clearFilter: string;
+  skillAnalyticsTitle: string;
+  qrCodeShareTitle: string;
+  timelineViewTitle: string;
 }
+

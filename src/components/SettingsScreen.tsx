@@ -48,7 +48,7 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
         });
       }
       alert(copy.clearCacheSuccess);
-    } catch (e) {
+    } catch {
       alert(copy.clearCacheFailure);
     }
   };
