@@ -372,6 +372,27 @@ export const StudyResourcesEn: StudyResource[] = [
     description: "Examples and guides for building with the OpenAI API.",
     link: "https://developers.openai.com/cookbook",
     imageUrl: "https://openai.com/apple-touch-icon.png"
+  },
+  {
+    title: "Gemini API Cookbook",
+    category: "AI Cookbooks",
+    description: "Examples and guides for building with the Gemini API.",
+    link: "https://github.com/google-gemini/cookbook",
+    imageUrl: "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
+  },
+  {
+    title: "ProAndroidDev",
+    category: "Community",
+    description: "Professional Android Development articles, tutorials, and guides.",
+    link: "https://proandroiddev.com/",
+    imageUrl: "https://miro.medium.com/v2/resize:fit:300/1*C4O_mIfhL4yP7o1d4XwGkg.png"
+  },
+  {
+    title: "Google AI Blog",
+    category: "AI News",
+    description: "The latest news and research from Google AI.",
+    link: "https://blog.research.google/",
+    imageUrl: "https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPhO_Ckd_EQQ_Bxc=w300"
   }
 ];
 
@@ -431,5 +452,26 @@ export const StudyResourcesZh: StudyResource[] = [
     description: "使用 OpenAI API 進行開發的範例與指南。",
     link: "https://developers.openai.com/cookbook",
     imageUrl: "https://openai.com/apple-touch-icon.png"
+  },
+  {
+    title: "Gemini API Cookbook",
+    category: "AI 實戰手冊",
+    description: "使用 Gemini API 進行開發的範例與指南。",
+    link: "https://github.com/google-gemini/cookbook",
+    imageUrl: "https://www.gstatic.com/lamda/images/gemini_sparkle_v002_d4735304ff6292a690345.svg"
+  },
+  {
+    title: "ProAndroidDev",
+    category: "社群",
+    description: "專業的 Android 開發文章、教學與指南。",
+    link: "https://proandroiddev.com/",
+    imageUrl: "https://miro.medium.com/v2/resize:fit:300/1*C4O_mIfhL4yP7o1d4XwGkg.png"
+  },
+  {
+    title: "Google AI Blog",
+    category: "AI 消息",
+    description: "來自 Google AI 的最新研究與新聞。",
+    link: "https://blog.research.google/",
+    imageUrl: "https://lh3.googleusercontent.com/COxitqgJr1sJnIDe8-jiKhxDx1FrYbtRHKJ9z_hELisAlapwE9LUPhO_Ckd_EQQ_Bxc=w300"
   }
 ];
