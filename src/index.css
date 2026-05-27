@@ -562,6 +562,110 @@ p.body-small {
   height: 20px;
 }
 
+.resume-check-box {
+  gap: 18px;
+}
+
+.resume-check-box.due {
+  border-color: color-mix(in srgb, var(--secondary) 70%, var(--outline-variant));
+}
+
+.resume-check-box.verified {
+  border-color: color-mix(in srgb, var(--primary) 55%, var(--outline-variant));
+}
+
+.resume-check-status-row {
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.resume-check-pill {
+  flex: 0 0 auto;
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1;
+  border: 1px solid currentColor;
+}
+
+.resume-check-pill.due {
+  color: var(--secondary);
+}
+
+.resume-check-pill.verified {
+  color: var(--primary);
+}
+
+.resume-check-meta {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.resume-check-meta div {
+  border: 1px solid var(--outline-variant);
+  background-color: var(--surface);
+  padding: 12px;
+  min-width: 0;
+}
+
+.resume-check-meta span,
+.resume-check-meta strong {
+  display: block;
+}
+
+.resume-check-meta span {
+  color: var(--secondary);
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  text-transform: uppercase;
+}
+
+.resume-check-meta strong {
+  color: var(--on-background);
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.resume-check-actions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.resume-check-action {
+  border: 1px solid var(--outline);
+  cursor: pointer;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  min-height: 42px;
+  padding: 10px 12px;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.resume-check-action.primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: var(--on-primary);
+}
+
+.resume-check-action.secondary {
+  background-color: transparent;
+  color: var(--on-background);
+}
+
+.resume-check-action.secondary:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="dark"] .resume-check-action.secondary:hover {
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
 .language-btn-group {
   display: flex;
   gap: 8px;

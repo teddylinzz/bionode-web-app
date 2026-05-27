@@ -2,6 +2,22 @@
 
 This is a mobile-styled resume application.
 
+## Demo
+
+Local demo URL:
+
+```text
+http://localhost:5173
+```
+
+Start it with:
+
+```bash
+npm run dev
+```
+
+If port `5173` is already in use, Vite will print the actual local URL in the terminal.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)

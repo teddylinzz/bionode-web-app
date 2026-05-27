@@ -1,0 +1,99 @@
+name: Monthly LinkedIn Resume Check
+
+on:
+  schedule:
+    - cron: '0 1 * * *'
+  workflow_dispatch:
+
+permissions:
+  issues: write
+  contents: read
+
+jobs:
+  create-resume-check:
+    name: Create resume check issue
+    runs-on: ubuntu-latest
+    steps:
+      - name: Create monthly resume check issue when due
+        uses: actions/github-script@v8
+        with:
+          script: |
+            const label = 'resume-check';
+            const now = new Date();
+            const cutoff = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000);
+            const today = now.toISOString().slice(0, 10);
+
+            const { owner, repo } = context.repo;
+
+            try {
+              await github.rest.issues.getLabel({
+                owner,
+                repo,
+                name: label,
+              });
+            } catch (error) {
+              if (error.status !== 404) {
+                throw error;
+              }
+
+              await github.rest.issues.createLabel({
+                owner,
+                repo,
+                name: label,
+                color: '0e4947',
+                description: 'Monthly LinkedIn resume review',
+              });
+            }
+
+            const { data: issues } = await github.rest.issues.listForRepo({
+              owner,
+              repo,
+              labels: label,
+              state: 'all',
+              per_page: 100,
+              sort: 'created',
+              direction: 'desc',
+            });
+
+            const reviewIssues = issues.filter((issue) => !issue.pull_request);
+            const openIssue = reviewIssues.find((issue) => issue.state === 'open');
+
+            if (openIssue) {
+              core.info(`Open resume check issue already exists: #${openIssue.number}`);
+              return;
+            }
+
+            const latestIssue = reviewIssues[0];
+            if (latestIssue && new Date(latestIssue.created_at) > cutoff) {
+              core.info(`Latest resume check issue #${latestIssue.number} was created less than 30 days ago.`);
+              return;
+            }
+
+            const body = [
+              'Compare the LinkedIn profile with the app resume data in `src/data.ts`.',
+              '',
+              'LinkedIn profile: https://linkedin.com/in/teddy-lin-2945855a',
+              '',
+              '## Checklist',
+              '',
+              '- [ ] Title matches LinkedIn and current target role',
+              '- [ ] Summary reflects the latest LinkedIn profile',
+              '- [ ] Skills are current and ranked appropriately',
+              '- [ ] Experience roles, companies, dates, locations, and highlights are current',
+              '- [ ] Education is still accurate',
+              '- [ ] Projects are current and useful for the resume',
+              '- [ ] Email, GitHub URL, and LinkedIn URL are correct',
+              '- [ ] English resume data is updated in `ResumeProfileEn`',
+              '- [ ] Traditional Chinese resume data is updated in `ResumeProfileZh`',
+              '- [ ] Run `npm run build` after any resume data changes',
+            ].join('\n');
+
+            const { data: issue } = await github.rest.issues.create({
+              owner,
+              repo,
+              title: `Monthly resume check: ${today}`,
+              body,
+              labels: [label],
+            });
+
+            core.info(`Created resume check issue #${issue.number}.`);

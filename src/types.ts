@@ -71,6 +71,14 @@ export interface AppCopy {
   clearApplicationCache: string;
   clearCacheSuccess: string;
   clearCacheFailure: string;
+  resumeCheckSection: string;
+  resumeCheckStatusDue: string;
+  resumeCheckStatusVerified: string;
+  resumeCheckLastReviewed: string;
+  resumeCheckNeverReviewed: string;
+  resumeCheckNextDue: string;
+  resumeCheckOpenLinkedIn: string;
+  resumeCheckMarkReviewed: string;
   resumeEngineLabel: string;
   resumeEngineStatus: string;
   footerRole: string;
@@ -104,4 +112,3 @@ export interface AppCopy {
   qrCodeShareTitle: string;
   timelineViewTitle: string;
 }
-

@@ -15,6 +15,8 @@ interface SettingsScreenProps {
   onPdfShowEducationChange: (show: boolean) => void;
   pdfShowSkills: boolean;
   onPdfShowSkillsChange: (show: boolean) => void;
+  resumeLastReviewedAt: string | null;
+  onResumeReviewed: () => void;
   onExportResume: () => void;
   copy: AppCopy;
 }
@@ -33,9 +35,38 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
   onPdfShowEducationChange,
   pdfShowSkills,
   onPdfShowSkillsChange,
+  resumeLastReviewedAt,
+  onResumeReviewed,
   onExportResume,
   copy
 }) => {
+  const CHECK_INTERVAL_DAYS = 30;
+  const MS_PER_DAY = 24 * 60 * 60 * 1000;
+  const [currentTime] = React.useState(() => Date.now());
+
+  const parseReviewDate = (value: string | null) => {
+    if (!value) {
+      return null;
+    }
+
+    const date = new Date(value);
+    return Number.isNaN(date.getTime()) ? null : date;
+  };
+
+  const formatDate = (date: Date) => {
+    return new Intl.DateTimeFormat(selectedLanguage === 'zh' ? 'zh-TW' : 'en', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric'
+    }).format(date);
+  };
+
+  const lastReviewedDate = parseReviewDate(resumeLastReviewedAt);
+  const nextDueDate = lastReviewedDate
+    ? new Date(lastReviewedDate.getTime() + CHECK_INTERVAL_DAYS * MS_PER_DAY)
+    : new Date(currentTime);
+  const isResumeCheckDue = !lastReviewedDate || currentTime >= nextDueDate.getTime();
+
   const handleClearCache = () => {
     try {
       localStorage.clear();
@@ -218,6 +249,45 @@ export const SettingsScreen: React.FC<SettingsScreenProps> = ({
               />
               <span className="slider round"></span>
             </label>
+          </div>
+        </div>
+      </div>
+
+      {/* Resume Check */}
+      <div>
+        <div className="settings-section-title">{copy.resumeCheckSection}</div>
+
+        <div className={`settings-box resume-check-box ${isResumeCheckDue ? 'due' : 'verified'}`}>
+          <div className="settings-row resume-check-status-row">
+            <div className="settings-row-label">
+              <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span>{isResumeCheckDue ? copy.resumeCheckStatusDue : copy.resumeCheckStatusVerified}</span>
+            </div>
+            <span className={`resume-check-pill ${isResumeCheckDue ? 'due' : 'verified'}`}>
+              {isResumeCheckDue ? 'DUE' : 'OK'}
+            </span>
+          </div>
+
+          <div className="resume-check-meta">
+            <div>
+              <span>{copy.resumeCheckLastReviewed}</span>
+              <strong>{lastReviewedDate ? formatDate(lastReviewedDate) : copy.resumeCheckNeverReviewed}</strong>
+            </div>
+            <div>
+              <span>{copy.resumeCheckNextDue}</span>
+              <strong>{formatDate(nextDueDate)}</strong>
+            </div>
+          </div>
+
+          <div className="resume-check-actions">
+            <button className="resume-check-action secondary" onClick={() => handleOpenLink(profile.linkedInUrl)}>
+              {copy.resumeCheckOpenLinkedIn}
+            </button>
+            <button className="resume-check-action primary" onClick={onResumeReviewed}>
+              {copy.resumeCheckMarkReviewed}
+            </button>
           </div>
         </div>
       </div>

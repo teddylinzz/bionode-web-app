@@ -47,6 +47,9 @@ function App() {
     const saved = localStorage.getItem('pdf_show_skills');
     return saved !== 'false';
   });
+  const [resumeLastReviewedAt, setResumeLastReviewedAt] = useState<string | null>(() => {
+    return localStorage.getItem('resume_last_reviewed_at');
+  });
 
   // Apply Theme effect
   useEffect(() => {
@@ -87,6 +90,14 @@ function App() {
   useEffect(() => {
     localStorage.setItem('pdf_show_skills', String(pdfShowSkills));
   }, [pdfShowSkills]);
+
+  useEffect(() => {
+    if (resumeLastReviewedAt) {
+      localStorage.setItem('resume_last_reviewed_at', resumeLastReviewedAt);
+    } else {
+      localStorage.removeItem('resume_last_reviewed_at');
+    }
+  }, [resumeLastReviewedAt]);
 
   const profile = language === 'zh' ? ResumeProfileZh : ResumeProfileEn;
   const copy = language === 'zh' ? TraditionalChineseCopy : EnglishCopy;
@@ -153,6 +164,8 @@ function App() {
             onPdfShowEducationChange={setPdfShowEducation}
             pdfShowSkills={pdfShowSkills}
             onPdfShowSkillsChange={setPdfShowSkills}
+            resumeLastReviewedAt={resumeLastReviewedAt}
+            onResumeReviewed={() => setResumeLastReviewedAt(new Date().toISOString())}
             onExportResume={handleExportResume}
             copy={copy}
           />
